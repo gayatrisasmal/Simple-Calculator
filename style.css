@@ -1,0 +1,526 @@
+/* COLOR VARIABLES */
+
+:root {
+    --page-bg: #e8ecf4;
+
+    --body-bg: #1e2a44;
+
+    --screen-bg: #141d33;
+
+    --screen-text: #ffffff;
+
+    --screen-sub: #8fa0c4;
+
+    --key-number: #2e3d63;
+
+    --key-function: #43557f;
+
+    --key-operator: #5b7cfa;
+
+    --key-equals: #ff7a59;
+
+    --key-text: #ffffff;
+}
+
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    background-color: var(--page-bg);
+
+    font-family: Arial, sans-serif;
+}
+
+
+/*  CALCULATOR */
+
+.calculator {
+    width: 100%;
+    max-width: 900px;
+
+    min-height: 100vh;
+
+    margin: auto;
+
+    padding: 25px;
+
+    background-color: var(--body-bg);
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* HEADER */
+
+.calculator-header {
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.calculator-header h1 {
+    color: var(--key-equals);
+
+    font-size: clamp(30px, 5vw, 50px);
+
+    letter-spacing: 1px;
+}
+
+
+/* HISTORY BUTTON */
+
+.history-button {
+    position: absolute;
+
+    right: 0;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 55px;
+
+    height: 55px;
+
+    border: none;
+
+    background-color: transparent;
+
+    color: var(--key-equals);
+
+    font-size: 40px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    transition: 0.2s;
+}
+
+
+.history-button:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+
+/* DISPLAY */
+
+.display {
+    width: 100%;
+
+    height: 90px;
+
+    padding: 15px;
+
+    margin-bottom: 15px;
+
+    background-color: var(--screen-bg);
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+#display {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background-color: transparent;
+
+    color: var(--screen-text);
+
+    text-align: right;
+
+    font-size: clamp(30px, 6vw, 50px);
+}
+
+
+/* BUTTON GRID */
+
+.buttons {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+
+/* ALL CALCULATOR BUTTONS */
+
+.buttons button {
+    width: 100%;
+
+    height: clamp(60px, 9vw, 85px);
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: clamp(22px, 4vw, 32px);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.1s,
+        opacity 0.1s;
+}
+
+
+.buttons button:active {
+    transform: scale(0.95);
+
+    opacity: 0.8;
+}
+
+
+/* NUMBER / NORMAL BUTTONS */
+
+.normal {
+    background-color: var(--key-number);
+
+    color: var(--key-text);
+}
+
+
+/* FUNCTION BUTTONS(  )  % */
+
+.normal[data-value="("],
+.normal[data-value=")"],
+.normal[data-value="%"] {
+    background-color: var(--key-function);
+}
+
+
+/* OPERATOR BUTTONS */
+
+.operator {
+    background-color: var(--key-operator);
+
+    color: var(--key-text);
+}
+
+
+/* CLEAR BUTTON */
+
+.clear {
+    background-color: var(--key-function);
+
+    color: var(--key-text);
+}
+
+
+/* EQUAL BUTTON */
+
+.equal {
+    background-color: var(--key-equals);
+
+    color: var(--key-text);
+}
+
+/* FOOTER */
+
+.calculator footer {
+    margin-top: 20px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid var(--screen-sub);
+
+    text-align: center;
+
+    color: var(--screen-sub);
+
+    font-size: 14px;
+}
+
+
+/* FULL SCREEN HISTORY PAGE */
+
+.history-panel {
+    display: none;
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100vh;
+
+    background-color: var(--body-bg);
+
+    z-index: 1000;
+
+    padding: 80px 5vw 70px;
+}
+
+
+/* SHOW HISTORY */
+
+.history-panel.show {
+    display: block;
+}
+
+/*  CLOSE HISTORY BUTTON */
+
+.close-history {
+    position: absolute;
+
+    top: 15px;
+
+    right: 25px;
+
+    width: 60px;
+
+    height: 60px;
+
+    border: none;
+
+    background-color: transparent;
+
+    color: white;
+
+    font-size: 55px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    transition: 0.2s;
+}
+
+
+.close-history:hover {
+    color: var(--key-equals);
+
+    transform: scale(1.1);
+}
+
+
+/* WHITE HISTORY BOX */
+
+.history-box {
+    width: 100%;
+
+    height: calc(100vh - 150px);
+
+    background-color: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 25px;
+
+    overflow-y: auto;
+}
+
+
+/* HISTORY LIST */
+
+.history-list {
+    width: 100%;
+}
+
+
+/* HISTORY ITEM */
+
+.history-item {
+    width: 100%;
+
+    padding: 8px 5px;
+
+    color: #000000;
+
+    font-size: clamp(24px, 3vw, 36px);
+
+    font-weight: bold;
+}
+
+
+/* EMPTY HISTORY */
+
+.empty-history {
+    margin-top: 20px;
+
+    text-align: center;
+
+    color: #555555;
+
+    font-size: 22px;
+}
+
+
+/* HISTORY FOOTER */
+
+.history-footer {
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 0;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0;
+
+    border: none;
+
+    text-align: center;
+
+    color: var(--screen-text);
+
+    font-size: 14px;
+}
+
+
+/* TABLET */
+
+@media (max-width: 700px) {
+
+    .calculator {
+        padding: 18px;
+    }
+
+
+    .buttons {
+        gap: 8px;
+    }
+
+
+    .history-panel {
+        padding: 70px 25px 65px;
+    }
+
+
+    .history-box {
+        height: calc(100vh - 135px);
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 450px) {
+
+    .calculator {
+        padding: 12px;
+    }
+
+
+    .calculator-header h1 {
+        font-size: 30px;
+    }
+
+
+    .history-button {
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 32px;
+    }
+
+
+    .display {
+        height: 75px;
+    }
+
+
+    .buttons {
+        gap: 6px;
+    }
+
+
+    .buttons button {
+        height: 65px;
+
+        border-radius: 6px;
+    }
+
+
+    .calculator footer {
+        font-size: 12px;
+    }
+
+
+    /* History mobile */
+
+    .history-panel {
+        padding: 65px 10px 55px;
+    }
+
+
+    .close-history {
+        top: 8px;
+
+        right: 10px;
+
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 42px;
+    }
+
+
+    .history-box {
+        height: calc(100vh - 120px);
+
+        padding: 18px;
+
+        border-radius: 8px;
+    }
+
+
+    .history-item {
+        font-size: 22px;
+
+        padding: 8px 0;
+    }
+
+
+    .empty-history {
+        font-size: 18px;
+    }
+
+
+    .history-footer {
+        font-size: 12px;
+    }
+}
